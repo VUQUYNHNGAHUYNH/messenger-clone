@@ -81,7 +81,7 @@ const AuthForm = () => {
             disabled={isLoading}
             fullWidth
             type="submit"
-            onClick={() => googleAuth()}
+            onClick={() => googleAuth("google")}
           >
             {variant === "login" ? "Sign In" : "Register"}
           </Button>
