@@ -2,10 +2,12 @@
 
 import { useCallback, useState } from "react";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
-import Button from "./Button";
-import Input from "./input/Input";
+
 import { BsGoogle } from "react-icons/bs";
 import axios from "axios";
+import { toast } from "react-hot-toast";
+import Input from "@/app/components/input/Input";
+import Button from "@/app/components/Button";
 
 type Variant = "login" | "register";
 
@@ -38,7 +40,9 @@ const AuthForm = () => {
 
     if (variant === "register") {
       // Axios register
-      axios.post("/api/register", data);
+      axios
+        .post("/api/register", data)
+        .catch(() => toast.error("Something went wrong!"));
     }
     if (variant === "login") {
       // NextAuth login
