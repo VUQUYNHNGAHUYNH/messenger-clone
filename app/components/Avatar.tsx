@@ -8,12 +8,11 @@ type AvatarProps = {
 const Avatar: React.FC<AvatarProps> = ({ user }) => {
   return (
     <div className="relative">
-      <div className="relative inline-block rounded-full overflow-hidden h-12 w-12 md:h-14 md:w-14">
+      <div className="relative inline-block rounded-full overflow-hidden h-9 w-9 md:h-11 md:w-11">
         <Image
           src={user?.image || "/images/placeholder.jpg"}
           alt="Avatar"
-          width={48}
-          height={48}
+          fill
         />
       </div>
       <span className="absolute block rounded-full ring-white bg-green-500 ring-2 top-0 right-0 w-3 h-3" />
