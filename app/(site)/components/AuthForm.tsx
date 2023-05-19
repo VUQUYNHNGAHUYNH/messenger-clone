@@ -8,6 +8,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import Input from "@/app/components/input/Input";
 import Button from "@/app/components/Button";
+import { signIn } from "next-auth/react";
 
 type Variant = "login" | "register";
 
@@ -42,16 +43,43 @@ const AuthForm = () => {
       // Axios register
       axios
         .post("/api/register", data)
-        .catch(() => toast.error("Something went wrong!"));
+        .catch(() => toast.error("Something went wrong!"))
+        .finally(() => setIsLoading(false));
     }
     if (variant === "login") {
       // NextAuth login
+      signIn("credentials", {
+        ...data,
+        redirect: false,
+      })
+        .then((callback) => {
+          if (callback?.error) {
+            toast.error("Invalid credentials!");
+          }
+
+          if (callback?.ok && !callback?.error) {
+            toast.success("Logged in successfully!");
+          }
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
   const googleAuth = (action: string) => {
     setIsLoading(true);
     // NextAuth google auth
+    signIn(action, {
+      redirect: false,
+    })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error("Something went wrong!");
+        }
+        if (callback?.ok && !callback?.error) {
+          toast.success("Logged in successfully!");
+        }
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -106,7 +134,11 @@ const AuthForm = () => {
           </div>
 
           <div className="mt-6">
-            <Button fullWidth type="button" onClick={() => {}}>
+            <Button
+              fullWidth
+              type="button"
+              onClick={() => googleAuth("google")}
+            >
               <BsGoogle className="w-5 h-5" />
             </Button>
           </div>
