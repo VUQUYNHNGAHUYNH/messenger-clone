@@ -5,6 +5,7 @@ import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import Button from "./Button";
 import Input from "./input/Input";
 import { BsGoogle } from "react-icons/bs";
+import axios from "axios";
 
 type Variant = "login" | "register";
 
@@ -37,6 +38,7 @@ const AuthForm = () => {
 
     if (variant === "register") {
       // Axios register
+      axios.post("/api/register", data);
     }
     if (variant === "login") {
       // NextAuth login
