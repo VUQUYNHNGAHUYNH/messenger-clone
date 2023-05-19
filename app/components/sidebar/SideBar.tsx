@@ -2,8 +2,8 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import DesktopSidebar from "./DesktopSidebar";
 import MobileSidebar from "./MobileSidebar";
 
-const SideBar = ({ children }: { children: React.ReactNode }) => {
-  const currentUser = getCurrentUser();
+const SideBar = async ({ children }: { children: React.ReactNode }) => {
+  const currentUser = await getCurrentUser();
 
   return (
     <div className="h-full lg:pl-20">
