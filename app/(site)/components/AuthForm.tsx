@@ -43,6 +43,16 @@ const AuthForm = () => {
       // Axios register
       axios
         .post("/api/register", data)
+        .then(() => signIn("credentials", { ...data, redirect: false }))
+        .then((callback) => {
+          if (callback?.error) {
+            toast.error("Invalid credentials!");
+          }
+
+          if (callback?.ok) {
+            toast.success("Logged in successfully!");
+          }
+        })
         .catch(() => toast.error("Something went wrong!"))
         .finally(() => setIsLoading(false));
     }
@@ -93,6 +103,7 @@ const AuthForm = () => {
               register={register}
               errors={errors}
               disabled={isLoading}
+              required
             />
           )}
           <Input
@@ -101,6 +112,7 @@ const AuthForm = () => {
             register={register}
             errors={errors}
             disabled={isLoading}
+            required
           />
           <Input
             id="password"
@@ -109,14 +121,10 @@ const AuthForm = () => {
             register={register}
             errors={errors}
             disabled={isLoading}
+            required
           />
 
-          <Button
-            disabled={isLoading}
-            fullWidth
-            type="submit"
-            onClick={() => googleAuth("google")}
-          >
+          <Button disabled={isLoading} fullWidth type="submit">
             {variant === "login" ? "Sign In" : "Register"}
           </Button>
         </form>
