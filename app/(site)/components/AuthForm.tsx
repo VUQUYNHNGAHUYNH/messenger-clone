@@ -2,26 +2,27 @@
 
 import { useCallback, useState, useEffect } from "react";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
-
 import { BsGoogle } from "react-icons/bs";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import Input from "@/app/components/input/Input";
 import Button from "@/app/components/Button";
 import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type Variant = "login" | "register";
 
 const AuthForm = () => {
   const session = useSession();
+  const router = useRouter();
   const [variant, setVariant] = useState<Variant>("login");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (session?.status === "authenticated") {
-      console.log("Authenticated");
+      router.push("/users");
     }
-  }, [session?.status]);
+  }, [session?.status, router]);
 
   const toggleVariant = useCallback(() => {
     if (variant === "login") {
@@ -76,6 +77,7 @@ const AuthForm = () => {
 
           if (callback?.ok && !callback?.error) {
             toast.success("Logged in successfully!");
+            router.push("/users");
           }
         })
         .finally(() => setIsLoading(false));
