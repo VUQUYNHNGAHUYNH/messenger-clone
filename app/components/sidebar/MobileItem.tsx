@@ -30,7 +30,7 @@ const MobileItem: React.FC<MobileItemProps> = ({
         className={clsx(
           `group flex gap-x-3 text-sm text-sky-600 hover:text-sky-700 p-4 font-semibold w-full 
           justify-center items-center`,
-          active && "bg-sky-200"
+          active && "bg-gray-200"
         )}
       >
         <Icon className="h-8 w-8" />
